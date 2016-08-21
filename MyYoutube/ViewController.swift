@@ -36,6 +36,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath)
+        
         return cell
     }
     
@@ -44,6 +45,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return CGSizeMake(view.frame.width, 200)
     }
     
+    //by default the length is?
+    //why do we need to set this to zero?
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
     }
@@ -80,24 +83,55 @@ class VideoCell: UICollectionViewCell {
         return imageView
     }()
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.purpleColor()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let subtitleTextView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = UIColor.redColor()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
     func setupViews() {
+        
         addSubview(thumbnailImageView)
         addSubview(separatorView)
         addSubview(userProfileImageView)
+        addSubview(titleLabel)
+        addSubview(subtitleTextView)
         
         thumbnailImageView.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
         thumbnailImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
-        thumbnailImageView.bottomAnchor.constraintEqualToAnchor(userProfileImageView.topAnchor, constant: -32).active = true
-        thumbnailImageView.heightAnchor.constraintEqualToAnchor(self.heightAnchor, constant: -32).active = true
+        thumbnailImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 16).active = true
+        thumbnailImageView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -16).active = true
+        thumbnailImageView.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 16).active = true
+        thumbnailImageView.bottomAnchor.constraintEqualToAnchor(self.userProfileImageView.topAnchor, constant: -16).active = true
         
-        userProfileImageView.topAnchor.constraintEqualToAnchor(thumbnailImageView.bottomAnchor, constant: -16)
+        separatorView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
+        separatorView.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        //separatorView.topAnchor.constraintEqualToAnchor(thumbnailImageView.bottomAnchor, constant: 16).active = true
+        separatorView.heightAnchor.constraintEqualToConstant(1).active = true
+        separatorView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        
+        userProfileImageView.leftAnchor.constraintEqualToAnchor(thumbnailImageView.leftAnchor).active = true
         userProfileImageView.widthAnchor.constraintEqualToConstant(44).active = true
         userProfileImageView.heightAnchor.constraintEqualToConstant(44).active = true
+        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -16).active = true
         
+        titleLabel.rightAnchor.constraintEqualToAnchor(thumbnailImageView.rightAnchor).active = true
+        titleLabel.leftAnchor.constraintEqualToAnchor(userProfileImageView.rightAnchor, constant: 12).active = true
+        titleLabel.topAnchor.constraintEqualToAnchor(userProfileImageView.topAnchor).active = true
+        titleLabel.heightAnchor.constraintEqualToConstant(20).active = true
         
-        
-        separatorView.widthAnchor.constraintEqualToAnchor(self.widthAnchor).active = true
-        separatorView.heightAnchor.constraintEqualToConstant(1).active = true
+        subtitleTextView.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor).active = true
+        subtitleTextView.rightAnchor.constraintEqualToAnchor(titleLabel.rightAnchor).active = true
+        subtitleTextView.heightAnchor.constraintEqualToConstant(20).active = true
+        subtitleTextView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -10).active = true
     }
     
     required init?(coder aDecoder: NSCoder) {
