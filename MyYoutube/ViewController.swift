@@ -42,7 +42,9 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     //by default the size is 50 by 50, you change the size here
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(view.frame.width, 200)
+        //must keep ratio at 16:9 
+        let height = (view.frame.width - 16 - 16) * 9/16
+        return CGSizeMake(view.frame.width, height + 16 + 68 )
     }
     
     //by default the length is?
@@ -66,12 +68,15 @@ class VideoCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.blueColor()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "tinderPhoto")
+        imageView.contentMode = .ScaleAspectFill //now extending bounds
+        imageView.clipsToBounds = true //have to solve it by this
         return imageView
     }()
     
     let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -80,20 +85,25 @@ class VideoCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.greenColor()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "44x44")
+        imageView.layer.cornerRadius = 22
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.purpleColor()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Taylor Swift - Blank Space"
         return label
     }()
     
     let subtitleTextView: UITextView = {
         let textView = UITextView()
-        textView.backgroundColor = UIColor.redColor()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.text = "TaylorSwiftVEVO - 1,1604,684,607 views * 2 years"
+        textView.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0) //fixes issue of formatting
+        textView.textColor = UIColor.lightGrayColor()
         return textView
     }()
     
@@ -130,8 +140,8 @@ class VideoCell: UICollectionViewCell {
         
         subtitleTextView.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor).active = true
         subtitleTextView.rightAnchor.constraintEqualToAnchor(titleLabel.rightAnchor).active = true
-        subtitleTextView.heightAnchor.constraintEqualToConstant(20).active = true
-        subtitleTextView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -10).active = true
+        subtitleTextView.heightAnchor.constraintEqualToConstant(30).active = true
+        subtitleTextView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -4).active = true
     }
     
     required init?(coder aDecoder: NSCoder) {
