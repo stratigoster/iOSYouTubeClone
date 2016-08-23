@@ -69,17 +69,17 @@ class VideoCell: UICollectionViewCell {
         addSubview(subtitleTextView)
         
         thumbnailImageView.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
-        thumbnailImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
+        
         thumbnailImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 16).active = true
         thumbnailImageView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -16).active = true
         thumbnailImageView.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 16).active = true
         thumbnailImageView.bottomAnchor.constraintEqualToAnchor(self.userProfileImageView.topAnchor, constant: -16).active = true
         
-        separatorView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
-        separatorView.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        separatorView.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
+        separatorView.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor).active = true
         //separatorView.topAnchor.constraintEqualToAnchor(thumbnailImageView.bottomAnchor, constant: 16).active = true
         separatorView.heightAnchor.constraintEqualToConstant(1).active = true
-        separatorView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        //separatorView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
         
         userProfileImageView.leftAnchor.constraintEqualToAnchor(thumbnailImageView.leftAnchor).active = true
         userProfileImageView.widthAnchor.constraintEqualToConstant(44).active = true

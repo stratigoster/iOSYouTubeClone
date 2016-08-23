@@ -34,6 +34,17 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         //please register the cell class without it you get the error
         //Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'attempt to register a cell class which is not a subclass of UICollectionViewCell (UICollectionView)'
         collectionView?.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cellId")
+        
+        setupMenuBar()
+    }
+    
+    let menuBar: MenuBar = {
+        let mb = MenuBar()
+        return mb
+    }()
+    
+    private func setupMenuBar() {
+        view.addSubview(menuBar)
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
