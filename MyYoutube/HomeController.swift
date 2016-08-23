@@ -36,6 +36,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cellId")
         
         collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0)
         
         setupMenuBar()
     }
@@ -49,7 +50,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     private func setupMenuBar() {
         view.addSubview(menuBar)
         menuBar.heightAnchor.constraintEqualToConstant(50).active = true
-        menuBar.widthAnchor.constraintEqualToConstant(400).active = true
+        menuBar.widthAnchor.constraintEqualToAnchor(view.widthAnchor).active = true
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
