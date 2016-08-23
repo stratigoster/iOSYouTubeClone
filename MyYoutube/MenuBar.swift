@@ -30,10 +30,16 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         //must register collectionViewCells
         collectionView.registerClass(MenuCell.self, forCellWithReuseIdentifier: cellId)
         addSubview(collectionView)
-        collectionView.heightAnchor.constraintEqualToConstant(50).active = true
-        //collectionView.widthAnchor.constraintEqualToAnchor(self.widthAnchor).active = true
+        
+        /*
+        collectionView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
+        collectionView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
+        collectionView.heightAnchor.constraintEqualToAnchor(self.heightAnchor).active = true
+        collectionView.widthAnchor.constraintEqualToAnchor(self.widthAnchor).active = true
+        */
+        
         addConstraintsWithFormat("H:|[v0]|", views: collectionView)
-        //addConstraintsWithFormat("V:|[v0]|", views: collectionView)
+        addConstraintsWithFormat("V:|[v0]|", views: collectionView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,7 +54,10 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! MenuCell
         
-        cell.imageView.image = UIImage(named: imageNames[indexPath.item])
+        cell.imageView.image = UIImage(named: imageNames[indexPath.item])?.imageWithRenderingMode(.AlwaysTemplate)
+        
+        cell.backgroundColor = UIColor.blueColor()
+        
         return cell
     }
     
@@ -56,28 +65,17 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         return CGSizeMake(frame.width / 4, frame.height)
     }
     
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
     }
     
 }
 
 class MenuCell: BaseCell {
-    /* avoid code duplication of below lines create a parent base class.
-       override init(frame: CGRect) {
-           super.init(frame: frame)
-           setupViews()
-       }
-    
-       required init?(coder aDecoder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
-    */
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "home")?.imageWithRenderingMode(.AlwaysTemplate)
+        iv.image = UIImage(named:"account")?.imageWithRenderingMode(.AlwaysTemplate)
         iv.tintColor = UIColor.rgb(91, green: 14, blue: 13)
         return iv
     }()
@@ -86,9 +84,18 @@ class MenuCell: BaseCell {
         super.setupViews()
         
         addSubview(imageView)
-        imageView.widthAnchor.constraintEqualToConstant(28).active = true
-        imageView.heightAnchor.constraintEqualToConstant(28).active = true
+        
+        addConstraintsWithFormat("H:[v0(28)]", views: imageView)
+        addConstraintsWithFormat("V:[v0(28)]", views: imageView)
+        
+        addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
+            
+        /*
         imageView.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
         imageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
+        imageView.heightAnchor.constraintEqualToConstant(28).active = true
+        imageView.widthAnchor.constraintEqualToConstant(28).active = true
+ */
     }
 }
