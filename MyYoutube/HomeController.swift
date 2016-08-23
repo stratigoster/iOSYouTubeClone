@@ -35,16 +35,21 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         //Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'attempt to register a cell class which is not a subclass of UICollectionViewCell (UICollectionView)'
         collectionView?.registerClass(VideoCell.self, forCellWithReuseIdentifier: "cellId")
         
+        collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0)
+        
         setupMenuBar()
     }
     
     let menuBar: MenuBar = {
         let mb = MenuBar()
+        mb.translatesAutoresizingMaskIntoConstraints = false
         return mb
     }()
     
     private func setupMenuBar() {
         view.addSubview(menuBar)
+        menuBar.heightAnchor.constraintEqualToConstant(50).active = true
+        menuBar.widthAnchor.constraintEqualToConstant(400).active = true
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -34,13 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.statusBarStyle = .LightContent
         
+        //TODO: check 2 to see why statusBarBackgroundView is set up ths way
         let statusBarBackgroundView = UIView()
         statusBarBackgroundView.backgroundColor = UIColor.rgb(194, green: 31, blue: 31)
         
         window?.addSubview(statusBarBackgroundView)
         
         statusBarBackgroundView.leadingAnchor.constraintEqualToAnchor(window?.leadingAnchor).active = true
-        //statusBarBackgroundView.heightAnchor.constraintEqualToConstant(50).active = true
         statusBarBackgroundView.topAnchor.constraintEqualToAnchor(window?.topAnchor).active = true
         
         return true
