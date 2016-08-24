@@ -39,6 +39,10 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         collectionView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
         collectionView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
         
+        //set initial selected icon
+        let selectedIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+        collectionView.selectItemAtIndexPath(selectedIndexPath, animated: false, scrollPosition: .None)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
