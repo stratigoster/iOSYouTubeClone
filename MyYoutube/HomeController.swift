@@ -39,6 +39,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0)
         
         setupMenuBar()
+        setupNavBarButtons()
     }
     
     let menuBar: MenuBar = {
@@ -46,6 +47,29 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         mb.translatesAutoresizingMaskIntoConstraints = false
         return mb
     }()
+    
+    func setupNavBarButtons() {
+        //What's the difference between Template and original?
+        let searchImage = UIImage(named: "search")?.imageWithRenderingMode(.AlwaysOriginal)
+        //searchImage!.drawInRect(CGRectMake(0, 0, 48, 48))
+        
+        let searchBarButtonItem = UIBarButtonItem(image: searchImage, style: .Plain, target: self, action: #selector(handleSearch))
+        
+        let moreImage = UIImage(named: "nav")?.imageWithRenderingMode(.AlwaysOriginal)
+        //moreImage!.drawInRect(CGRectMake(0, 0, 48, 48))
+        
+        let moreButton = UIBarButtonItem(image: moreImage, style: .Plain, target: self, action: #selector(handleMore))
+        
+        navigationItem.rightBarButtonItems = [moreButton, searchBarButtonItem]
+    }
+    
+    func handleSearch() {
+        print(123)
+    }
+    
+    func handleMore() {
+        print(123)
+    }
     
     private func setupMenuBar() {
         view.addSubview(menuBar)
