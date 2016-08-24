@@ -26,6 +26,10 @@ class BaseCell: UICollectionViewCell {
 }
 
 class VideoCell: UICollectionViewCell {
+    
+
+    //var video:Video
+    
     //must override this class
     override init(frame: CGRect) {
         super.init(frame: frame)

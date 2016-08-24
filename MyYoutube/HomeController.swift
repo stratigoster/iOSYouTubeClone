@@ -16,6 +16,18 @@ import UIKit
 //find and learn from the code from videos only.
 
 class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    var videos: [Video] = {
+        var blankSpaceVideo = Video()
+        blankSpaceVideo.title = "Taylor Swift - Blank Space"
+        blankSpaceVideo.thumbnailImageName = "taylor_swift_blank_space"
+        
+        var badBloodVideo = Video()
+        badBloodVideo.title = "Taylor Swift - Bad Blood featuring Kendrick Lamar"
+        badBloodVideo.thumbnailImageName = ""
+        
+        return [blankSpaceVideo]
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +99,9 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath) as! VideoCell
+        
+        //cell.video = videos[indexPath.item]
+        
         return cell
     }
     
