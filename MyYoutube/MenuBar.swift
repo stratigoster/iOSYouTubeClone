@@ -15,6 +15,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = UIColor.rgb(230, green: 32, blue: 31)
         cv.dataSource = self
         cv.delegate = self
@@ -31,15 +32,13 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         collectionView.registerClass(MenuCell.self, forCellWithReuseIdentifier: cellId)
         addSubview(collectionView)
         
-        /*
-        collectionView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
-        collectionView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
-        collectionView.heightAnchor.constraintEqualToAnchor(self.heightAnchor).active = true
-        collectionView.widthAnchor.constraintEqualToAnchor(self.widthAnchor).active = true
-        */
+        collectionView.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
         
-        addConstraintsWithFormat("H:|[v0]|", views: collectionView)
-        addConstraintsWithFormat("V:|[v0]|", views: collectionView)
+        collectionView.leftAnchor.constraintEqualToAnchor(self.leftAnchor).active = true
+        collectionView.rightAnchor.constraintEqualToAnchor(self.rightAnchor).active = true
+        collectionView.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
+        collectionView.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,9 +53,10 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: indexPath) as! MenuCell
         
+        //set tint color to image view: dark red
         cell.imageView.image = UIImage(named: imageNames[indexPath.item])?.imageWithRenderingMode(.AlwaysTemplate)
         
-        cell.backgroundColor = UIColor.blueColor()
+        cell.tintColor = UIColor.rgb(91, green: 14, blue: 13)
         
         return cell
     }
@@ -71,31 +71,41 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
 }
 
+//cells are selectable and highlightable by default
 class MenuCell: BaseCell {
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named:"account")?.imageWithRenderingMode(.AlwaysTemplate)
+        //.Always Template ignores the image's default color.
+        //iv.image = UIImage(named:"account")?.imageWithRenderingMode(.AlwaysTemplate)
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        //original tint color the first time the image is loaded
         iv.tintColor = UIColor.rgb(91, green: 14, blue: 13)
         return iv
     }()
+    
+    //executed every time the cell is selected add print("123") to confirm
+    override var highlighted: Bool {
+        didSet {
+            imageView.tintColor = highlighted ? UIColor.whiteColor() : UIColor.rgb(91, green: 14, blue: 13)
+        }
+    }
+    
+    override var selected: Bool {
+        didSet {
+            imageView.tintColor = selected ? UIColor.whiteColor() : UIColor.rgb(91, green: 14, blue: 13)
+        }
+    }
  
     override func setupViews() {
         super.setupViews()
         
         addSubview(imageView)
         
-        addConstraintsWithFormat("H:[v0(28)]", views: imageView)
-        addConstraintsWithFormat("V:[v0(28)]", views: imageView)
-        
-        addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
-            
-        /*
         imageView.centerXAnchor.constraintEqualToAnchor(self.centerXAnchor).active = true
         imageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
         imageView.heightAnchor.constraintEqualToConstant(28).active = true
         imageView.widthAnchor.constraintEqualToConstant(28).active = true
- */
+ 
     }
 }

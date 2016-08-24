@@ -49,19 +49,11 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     private func setupMenuBar() {
         view.addSubview(menuBar)
-        view.addConstraintsWithFormat("H:|[v0]|", views: menuBar)
-        view.addConstraintsWithFormat("V:|[v0(50)]", views: menuBar)
-        /*view.addSubview(menuBar)
-        view.addConstraintsWithFormat("H:|[v0]|", views: menuBar)
-        view.addConstraintsWithFormat("V:|[v0(50)]", views: menuBar)
-        view.backgroundColor = UIColor.whiteColor()
- */
-        /*
-         menuBar.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
-         menuBar.topAnchor.constraintEqualToAnchor(view.topAnchor).active = true
-         menuBar.heightAnchor.constraintEqualToConstant(50).active = true
-         menuBar.widthAnchor.constraintEqualToAnchor(view.widthAnchor).active = true
-        */
+        
+        menuBar.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
+        menuBar.topAnchor.constraintEqualToAnchor(view.topAnchor).active = true
+        menuBar.heightAnchor.constraintEqualToConstant(50).active = true
+        menuBar.widthAnchor.constraintEqualToAnchor(view.widthAnchor).active = true
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -70,9 +62,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath)
- 
-        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath) as! VideoCell
         return cell
     }
     
