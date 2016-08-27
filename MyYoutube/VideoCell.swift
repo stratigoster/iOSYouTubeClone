@@ -39,7 +39,7 @@ class VideoCell: BaseCell {
             setupThumbnailImage()
             
             if let profileImageName = video?.channel?.profileImageName {
-                userProfileImageView.image = UIImage(named: profileImageName)
+                userProfileImageView.loadImageUsingUrlString(profileImageName)
             }
             
             if let channelName = video?.channel?.name, numberOfViews = video?.numberOfViews {
@@ -96,13 +96,11 @@ class VideoCell: BaseCell {
         setupViews()
     }
     
-    let thumbnailImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.blueColor()
+    let thumbnailImageView: CustomImageView = {
+        let imageView = CustomImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "tinderPhoto")
-        imageView.contentMode = .ScaleAspectFill //now extending bounds
-        imageView.clipsToBounds = true //have to solve it by this
+        imageView.contentMode = .ScaleAspectFit //now extending bounds
+        //imageView.clipsToBounds = true //have to solve it by this
         return imageView
     }()
     
@@ -113,9 +111,8 @@ class VideoCell: BaseCell {
         return view
     }()
     
-    let userProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.greenColor()
+    let userProfileImageView: CustomImageView = {
+        let imageView = CustomImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "44x44")
         imageView.contentMode = .ScaleAspectFill //now extending bounds
