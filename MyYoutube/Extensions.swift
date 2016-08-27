@@ -23,7 +23,6 @@ extension UIView {
             viewsDictionary[key] = view
         }
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
-        
     }
 }
 

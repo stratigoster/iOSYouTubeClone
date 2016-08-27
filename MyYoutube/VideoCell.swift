@@ -33,9 +33,7 @@ class VideoCell: BaseCell {
 
     var video: Video? {
         didSet {
-            
             titleLabel.text = video?.title
-    
             setupThumbnailImage()
             
             if let profileImageName = video?.channel?.profileImageName {
@@ -82,7 +80,7 @@ class VideoCell: BaseCell {
                     return
                 }
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.thumbnailImageView.image = UIImage(data: data!)
+                    self.thumbnailImageView.image = UIImage(named: "444x200")//UIImage(data: data!)
                 })
                 
             }).resume()
@@ -150,7 +148,7 @@ class VideoCell: BaseCell {
         
         thumbnailImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 16).active = true
         thumbnailImageView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -16).active = true
-        thumbnailImageView.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 16).active = true
+        thumbnailImageView.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 8).active = true
         thumbnailImageView.bottomAnchor.constraintEqualToAnchor(self.userProfileImageView.topAnchor, constant: -16).active = true
         
         separatorView.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
@@ -162,15 +160,16 @@ class VideoCell: BaseCell {
         userProfileImageView.leftAnchor.constraintEqualToAnchor(thumbnailImageView.leftAnchor).active = true
         userProfileImageView.widthAnchor.constraintEqualToConstant(44).active = true
         userProfileImageView.heightAnchor.constraintEqualToConstant(44).active = true
-        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -36).active = true
+        userProfileImageView.topAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -36).active = true
         
         titleLabel.rightAnchor.constraintEqualToAnchor(thumbnailImageView.rightAnchor).active = true
         titleLabel.leftAnchor.constraintEqualToAnchor(userProfileImageView.rightAnchor, constant: 12).active = true
-        titleLabel.topAnchor.constraintEqualToAnchor(userProfileImageView.topAnchor).active = true
+        titleLabel.topAnchor.constraintEqualToAnchor(userProfileImageView.bottomAnchor).active = true
+        titleLabel.heightAnchor.constraintEqualToConstant(44).active = true
         //programmatic constraints do not work for constraint anchors
         
-        titleLabelHeightConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 44)
-        addConstraint(titleLabelHeightConstraint!)
+        //titleLabelHeightConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 44)
+        //addConstraint(titleLabelHeightConstraint!)
         
         //titleLabel.hei(titleLabelHeightConstraint).active = true
         

@@ -17,27 +17,6 @@ import UIKit
 
 class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-//    var videos: [Video] = {
-//        
-//        var kanyeChannel = Channel()
-//        kanyeChannel.name = "KanyeIsTheBestChannel"
-//        kanyeChannel.profileImageName = "kanye_profile"
-//        
-//        var blankSpaceVideo = Video()
-//        blankSpaceVideo.title = "Taylor Swift - Blank Space"
-//        blankSpaceVideo.thumbnailImageName = "tinderPhoto"
-//        blankSpaceVideo.channel = kanyeChannel
-//        blankSpaceVideo.numberOfViews = 239843093
-//        
-//        var badBloodVideo = Video()
-//        badBloodVideo.title = "Taylor Swift - Bad Blood featuring Kendrick Lamar"
-//        badBloodVideo.thumbnailImageName = "tinderPhoto"
-//        badBloodVideo.channel = kanyeChannel
-//        badBloodVideo.numberOfViews = 579894934
-//        
-//        return [blankSpaceVideo, badBloodVideo, blankSpaceVideo, badBloodVideo, blankSpaceVideo]
-//    }()
-    
     var videos: [Video]?
 
     override func viewDidLoad() {
