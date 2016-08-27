@@ -17,20 +17,33 @@ import UIKit
 
 class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var videos: [Video] = {
-        var blankSpaceVideo = Video()
-        blankSpaceVideo.title = "Taylor Swift - Blank Space"
-        blankSpaceVideo.thumbnailImageName = "taylor_swift_blank_space"
-        
-        var badBloodVideo = Video()
-        badBloodVideo.title = "Taylor Swift - Bad Blood featuring Kendrick Lamar"
-        badBloodVideo.thumbnailImageName = ""
-        
-        return [blankSpaceVideo]
-    }()
+//    var videos: [Video] = {
+//        
+//        var kanyeChannel = Channel()
+//        kanyeChannel.name = "KanyeIsTheBestChannel"
+//        kanyeChannel.profileImageName = "kanye_profile"
+//        
+//        var blankSpaceVideo = Video()
+//        blankSpaceVideo.title = "Taylor Swift - Blank Space"
+//        blankSpaceVideo.thumbnailImageName = "tinderPhoto"
+//        blankSpaceVideo.channel = kanyeChannel
+//        blankSpaceVideo.numberOfViews = 239843093
+//        
+//        var badBloodVideo = Video()
+//        badBloodVideo.title = "Taylor Swift - Bad Blood featuring Kendrick Lamar"
+//        badBloodVideo.thumbnailImageName = "tinderPhoto"
+//        badBloodVideo.channel = kanyeChannel
+//        badBloodVideo.numberOfViews = 579894934
+//        
+//        return [blankSpaceVideo, badBloodVideo, blankSpaceVideo, badBloodVideo, blankSpaceVideo]
+//    }()
+    
+    var videos: [Video]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchVideos()
         
         navigationItem.title = "Home"
         navigationController?.navigationBar.translucent = false
@@ -39,6 +52,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         titleLabel.text = "Home"
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = UIFont.systemFontOfSize(20)
+        titleLabel.numberOfLines = 2
         navigationItem.titleView = titleLabel
         
         collectionView?.backgroundColor = UIColor.whiteColor()
@@ -52,6 +66,43 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         setupMenuBar()
         setupNavBarButtons()
+    }
+    
+    func fetchVideos() {
+        let url = NSURL(string: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json")
+        
+        NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) in
+            if error != nil {
+                print(error)
+                return
+            }
+            //step 1: ensure endpoint works
+            
+            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print(str)
+            
+            //step 2: parse JSON
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                
+                self.videos = [Video]()
+                
+                for dictionary in json as! [[String: AnyObject]] {
+                    
+                    let video = Video()
+                    video.title = dictionary["title"] as? String
+                    video.thumbnailImageName = dictionary["thumbnail_image_name"] as? String
+                    self.videos?.append(video)
+                    print(self.videos)
+                    //print(dictionary["title"])
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.collectionView?.reloadData()
+                })
+            } catch let jsonError {
+                print(jsonError)
+            }
+        }.resume()
     }
     
     let menuBar: MenuBar = {
@@ -93,14 +144,15 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return videos?.count ?? 0
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellId", forIndexPath: indexPath) as! VideoCell
         
-        //cell.video = videos[indexPath.item]
+        //didSet gets called here because videos is set here
+        cell.video = videos?[indexPath.item]
         
         return cell
     }
@@ -109,7 +161,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         //must keep ratio at 16:9 
         let height = (view.frame.width - 16 - 16) * 9/16
-        return CGSizeMake(view.frame.width, height + 16 + 68 )
+        return CGSizeMake(view.frame.width, height + 16 + 88 )
     }
     
     //by default the length is?

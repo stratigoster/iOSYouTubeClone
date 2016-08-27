@@ -25,10 +25,70 @@ class BaseCell: UICollectionViewCell {
     }
 }
 
-class VideoCell: UICollectionViewCell {
-    
+var titleLabelHeightConstraint: NSLayoutConstraint?
 
-    //var video:Video
+class VideoCell: BaseCell {
+    
+    //willSet and didSet observers are not called when a property is first initialized. They are only called when the property’s value is set outside of an initialization context
+
+    var video: Video? {
+        didSet {
+            
+            titleLabel.text = video?.title
+    
+            setupThumbnailImage()
+            
+            if let profileImageName = video?.channel?.profileImageName {
+                userProfileImageView.image = UIImage(named: profileImageName)
+            }
+            
+            if let channelName = video?.channel?.name, numberOfViews = video?.numberOfViews {
+                let numberFormatter = NSNumberFormatter()
+                numberFormatter.numberStyle = .DecimalStyle
+                
+                let subtitleText = "\(channelName) * \(numberFormatter.stringFromNumber(numberOfViews)!) * 2 years ago "
+                
+                subtitleTextView.text = subtitleText
+            }
+            
+            //create a dynamic layout that expands when you have more text
+            //measure title text so that it fits the screen correctly
+            if let title = video?.title {
+                //from left to right (distance + image + distance)
+                let size = CGSizeMake(frame.width - 16 - 44 - 8 - 16, 1000)
+                let options = NSStringDrawingOptions.UsesFontLeading.union(.UsesLineFragmentOrigin)
+                
+                //estimate how much the title text is
+                let estimatedRect = NSString(string: title).boundingRectWithSize(size, options: options, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(14)], context: nil)
+                
+                if estimatedRect.size.height > 20 {
+                    //support two rows of text
+                    titleLabelHeightConstraint?.constant = 44
+                }
+                else {
+                    //support one row of text
+                    //titleLabelHeightConstraint?.constant = 20
+                }
+            }
+        }
+    }
+    
+    func setupThumbnailImage() {
+        if let thumbnailImageUrl = video?.thumbnailImageName {
+            let url = NSURL(string: thumbnailImageUrl)
+            NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: {(data, response, error) in
+                if error != nil {
+                    print(error)
+                    return
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.thumbnailImageView.image = UIImage(data: data!)
+                })
+                
+            }).resume()
+            print(thumbnailImageUrl)
+        }
+    }
     
     //must override this class
     override init(frame: CGRect) {
@@ -58,6 +118,7 @@ class VideoCell: UICollectionViewCell {
         imageView.backgroundColor = UIColor.greenColor()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "44x44")
+        imageView.contentMode = .ScaleAspectFill //now extending bounds
         imageView.layer.cornerRadius = 22
         imageView.layer.masksToBounds = true
         return imageView
@@ -66,6 +127,7 @@ class VideoCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         label.text = "Taylor Swift - Blank Space"
         return label
     }()
@@ -79,7 +141,7 @@ class VideoCell: UICollectionViewCell {
         return textView
     }()
     
-    func setupViews() {
+    override func setupViews() {
         
         addSubview(thumbnailImageView)
         addSubview(separatorView)
@@ -103,12 +165,17 @@ class VideoCell: UICollectionViewCell {
         userProfileImageView.leftAnchor.constraintEqualToAnchor(thumbnailImageView.leftAnchor).active = true
         userProfileImageView.widthAnchor.constraintEqualToConstant(44).active = true
         userProfileImageView.heightAnchor.constraintEqualToConstant(44).active = true
-        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -16).active = true
+        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -36).active = true
         
         titleLabel.rightAnchor.constraintEqualToAnchor(thumbnailImageView.rightAnchor).active = true
         titleLabel.leftAnchor.constraintEqualToAnchor(userProfileImageView.rightAnchor, constant: 12).active = true
         titleLabel.topAnchor.constraintEqualToAnchor(userProfileImageView.topAnchor).active = true
-        titleLabel.heightAnchor.constraintEqualToConstant(20).active = true
+        //programmatic constraints do not work for constraint anchors
+        
+        titleLabelHeightConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 44)
+        addConstraint(titleLabelHeightConstraint!)
+        
+        //titleLabel.hei(titleLabelHeightConstraint).active = true
         
         subtitleTextView.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor).active = true
         subtitleTextView.rightAnchor.constraintEqualToAnchor(titleLabel.rightAnchor).active = true
