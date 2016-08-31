@@ -67,13 +67,10 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
                 self.videos = [Video]()
                 
                 for dictionary in json as! [[String: AnyObject]] {
-                    
                     let video = Video()
                     video.title = dictionary["title"] as? String
                     video.thumbnailImageName = dictionary["thumbnail_image_name"] as? String
                     self.videos?.append(video)
-                    print(self.videos)
-                    //print(dictionary["title"])
                 }
                 dispatch_async(dispatch_get_main_queue(), {
                     self.collectionView?.reloadData()
