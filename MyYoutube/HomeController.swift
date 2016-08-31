@@ -137,7 +137,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         //must keep ratio at 16:9 
         let height = (view.frame.width - 16 - 16) * 9/16
-        return CGSizeMake(view.frame.width, height + 16 + 88 )
+        print(height)
+        return CGSizeMake(view.frame.width, height + 16 + 96 )
     }
     
     //by default the length is?

@@ -68,54 +68,15 @@ class VideoCell: BaseCell {
                 }
                 else {
                     //support one row of text
-                    //titleLabelHeightConstraint?.constant = 20
+                    titleLabelHeightConstraint?.constant = 20
                 }
             }
         }
     }
     
-    func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / image.size.width
-        let heightRatio = targetSize.height / image.size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        
-        if(widthRatio > heightRatio) {
-            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
-        } else {
-            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.drawInRect(rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
-    
     func setupThumbnailImage() {
         if let thumbnailImageUrl = video?.thumbnailImageName {
-            let url = NSURL(string: thumbnailImageUrl)
-            NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: {(data, response, error) in
-                if error != nil {
-                    print(error)
-                    return
-                }
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.thumbnailImageView.image = UIImage(data: data!)
-                    //self.thumbnailImageView.image = UIImage(named: "tinderPhoto")
-                    self.thumbnailImageView.image = self.ResizeImage( self.thumbnailImageView.image!, targetSize: CGSizeMake(self.frame.width - 32, 200.0))
-                })
-                
-            }).resume()
+            self.thumbnailImageView.loadImageUsingUrlString(thumbnailImageUrl)
         }
     }
     
@@ -175,29 +136,31 @@ class VideoCell: BaseCell {
         addSubview(titleLabel)
         addSubview(subtitleTextView)
         
+        thumbnailImageView.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 8).active = true
         thumbnailImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 16).active = true
         thumbnailImageView.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: -16).active = true
-        thumbnailImageView.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 8).active = true
+        thumbnailImageView.bottomAnchor.constraintEqualToAnchor(self.userProfileImageView.topAnchor).active = true
+    
         
         userProfileImageView.leftAnchor.constraintEqualToAnchor(thumbnailImageView.leftAnchor).active = true
         userProfileImageView.widthAnchor.constraintEqualToConstant(44).active = true
         userProfileImageView.heightAnchor.constraintEqualToConstant(44).active = true
-        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -36).active = true
+        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -16).active = true
         
         separatorView.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
         separatorView.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor).active = true
-        separatorView.topAnchor.constraintEqualToAnchor(self.userProfileImageView.bottomAnchor).active = true
+        separatorView.topAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
         separatorView.heightAnchor.constraintEqualToConstant(1).active = true
         
         titleLabel.rightAnchor.constraintEqualToAnchor(thumbnailImageView.rightAnchor).active = true
         titleLabel.leftAnchor.constraintEqualToAnchor(userProfileImageView.rightAnchor, constant: 12).active = true
         titleLabel.topAnchor.constraintEqualToAnchor(userProfileImageView.topAnchor).active = true
-        titleLabel.heightAnchor.constraintEqualToConstant(44).active = true
+        //titleLabel.heightAnchor.constraintEqualToConstant(44).active = true
         //programmatic constraints do not work for constraint anchors
         
-        //titleLabelHeightConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 44)
-        //addConstraint(titleLabelHeightConstraint!)
-        //titleLabel.hei(titleLabelHeightConstraint).active = true
+        titleLabelHeightConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0, constant: 44)
+        addConstraint(titleLabelHeightConstraint!)
+        
         
         subtitleTextView.leftAnchor.constraintEqualToAnchor(titleLabel.leftAnchor).active = true
         subtitleTextView.rightAnchor.constraintEqualToAnchor(titleLabel.rightAnchor).active = true
