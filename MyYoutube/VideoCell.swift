@@ -68,7 +68,7 @@ class VideoCell: BaseCell {
                 }
                 else {
                     //support one row of text
-                    titleLabelHeightConstraint?.constant = 20
+                    //titleLabelHeightConstraint?.constant = 20
                 }
             }
         }
@@ -145,7 +145,7 @@ class VideoCell: BaseCell {
         userProfileImageView.leftAnchor.constraintEqualToAnchor(thumbnailImageView.leftAnchor).active = true
         userProfileImageView.widthAnchor.constraintEqualToConstant(44).active = true
         userProfileImageView.heightAnchor.constraintEqualToConstant(44).active = true
-        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -16).active = true
+        userProfileImageView.bottomAnchor.constraintEqualToAnchor(separatorView.topAnchor, constant: -30).active = true
         
         separatorView.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
         separatorView.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor).active = true
@@ -155,6 +155,7 @@ class VideoCell: BaseCell {
         titleLabel.rightAnchor.constraintEqualToAnchor(thumbnailImageView.rightAnchor).active = true
         titleLabel.leftAnchor.constraintEqualToAnchor(userProfileImageView.rightAnchor, constant: 12).active = true
         titleLabel.topAnchor.constraintEqualToAnchor(userProfileImageView.topAnchor).active = true
+        titleLabel.bottomAnchor.constraintEqualToAnchor(self.subtitleTextView.topAnchor).active = true
         //titleLabel.heightAnchor.constraintEqualToConstant(44).active = true
         //programmatic constraints do not work for constraint anchors
         

@@ -106,8 +106,38 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         print(123)
     }
     
+    //why make this global?
+    let blackView = UIView()
+    
+    //create black dimmer background view
     func handleMore() {
-        print(123)
+        //show menu
+        //animate in
+        
+        if let window = UIApplication.sharedApplication().keyWindow {
+            blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            
+            blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
+            
+            window.addSubview(blackView)
+            blackView.frame = window.frame
+            //animation beginning state
+            blackView.alpha = 0
+            
+            //animates in
+            UIView.animateWithDuration(0.5, animations: {
+                self.blackView.alpha = 1
+            })
+            
+            //dismiss view when tapped
+            //add a gesture recognizer
+        }
+    }
+    
+    func handleDismiss() {
+        UIView.animateWithDuration(0.5, animations: {
+            self.blackView.alpha = 0
+        })
     }
     
     private func setupMenuBar() {
