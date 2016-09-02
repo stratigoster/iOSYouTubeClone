@@ -15,6 +15,7 @@
 		AE172A731D6BBDE300D99185 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE172A721D6BBDE300D99185 /* Extensions.swift */; };
 		AE172A751D6BBEB500D99185 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE172A741D6BBEB500D99185 /* MenuBar.swift */; };
 		AE1B992E1D6E012100AC3055 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1B992D1D6E012100AC3055 /* Video.swift */; };
+		AE7524411D79402900B3D730 /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7524401D79402900B3D730 /* SettingsLauncher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		AE172A721D6BBDE300D99185 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AE172A741D6BBEB500D99185 /* MenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		AE1B992D1D6E012100AC3055 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		AE7524401D79402900B3D730 /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				AE10F7A71D53CED000E197B5 /* HomeController.swift */,
+				AE7524401D79402900B3D730 /* SettingsLauncher.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				AE10F7A81D53CED000E197B5 /* HomeController.swift in Sources */,
 				AE1B992E1D6E012100AC3055 /* Video.swift in Sources */,
 				AE10F7A61D53CED000E197B5 /* AppDelegate.swift in Sources */,
+				AE7524411D79402900B3D730 /* SettingsLauncher.swift in Sources */,
 				AE172A701D6B902400D99185 /* VideoCell.swift in Sources */,
 				AE172A731D6BBDE300D99185 /* Extensions.swift in Sources */,
 				AE172A751D6BBEB500D99185 /* MenuBar.swift in Sources */,
