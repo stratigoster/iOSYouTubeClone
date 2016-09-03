@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsLauncher: NSObject {
+class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     //why make this global? in order to use inside handleDismiss
     let blackView = UIView()
@@ -20,16 +20,18 @@ class SettingsLauncher: NSObject {
         return cv
     }()
     
+    let cellId = "StringId"
+    
     //create black dimmer background view
     func showSettings() {
         //show menu
         //animate in
-        
         if let window = UIApplication.sharedApplication().keyWindow {
             blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
             
             blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
             
+            //blackview covers collectionView, prevents collectionView from being clicked
             window.addSubview(blackView)
             window.addSubview(collectionView) //add collectionView
             
@@ -58,13 +60,31 @@ class SettingsLauncher: NSObject {
     func handleDismiss() {
         UIView.animateWithDuration(0.5, animations: {
             self.blackView.alpha = 0
+            //animate back
             if let window = UIApplication.sharedApplication().keyWindow {
                 self.collectionView.frame = CGRectMake(0, window.frame.height, self.collectionView.frame.width, self.collectionView.frame.height)
             }
         })
     }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
 
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        //step 1: create a cell and populate it
+        //step 2 returnthe cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellId, forIndexPath: <#T##NSIndexPath#>)
+        return cell
+    }
+    
     override init() {
         super.init()
+        
+        //setup collectionView
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        collectionView.registerClass(SettingCell.self, forCellWithReuseIdentifier: cellId)
     }
 }

@@ -16,6 +16,7 @@
 		AE172A751D6BBEB500D99185 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE172A741D6BBEB500D99185 /* MenuBar.swift */; };
 		AE1B992E1D6E012100AC3055 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1B992D1D6E012100AC3055 /* Video.swift */; };
 		AE7524411D79402900B3D730 /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7524401D79402900B3D730 /* SettingsLauncher.swift */; };
+		AEAF51061D7A7F3800CAFD59 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAF51051D7A7F3800CAFD59 /* SettingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		AE172A741D6BBEB500D99185 /* MenuBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		AE1B992D1D6E012100AC3055 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		AE7524401D79402900B3D730 /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
+		AEAF51051D7A7F3800CAFD59 /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				AE172A6F1D6B902400D99185 /* VideoCell.swift */,
 				AE172A741D6BBEB500D99185 /* MenuBar.swift */,
+				AEAF51051D7A7F3800CAFD59 /* SettingCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 			files = (
 				AE10F7A81D53CED000E197B5 /* HomeController.swift in Sources */,
 				AE1B992E1D6E012100AC3055 /* Video.swift in Sources */,
+				AEAF51061D7A7F3800CAFD59 /* SettingCell.swift in Sources */,
 				AE10F7A61D53CED000E197B5 /* AppDelegate.swift in Sources */,
 				AE7524411D79402900B3D730 /* SettingsLauncher.swift in Sources */,
 				AE172A701D6B902400D99185 /* VideoCell.swift in Sources */,
