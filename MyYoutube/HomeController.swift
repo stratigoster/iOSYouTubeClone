@@ -112,7 +112,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         print(123)
     }
     
-     
     private func setupMenuBar() {
         view.addSubview(menuBar)
         
